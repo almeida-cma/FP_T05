@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tema 05 - Vetores em Portugol</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .card-header button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.75rem;
+        }
+
+        .card-header button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .card-content {
+            padding: 20px;
+            flex: 1;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.75rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            position: relative;
+            max-height: 320px;
+            overflow-y: auto;
+        }
+
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 3px 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.65rem;
+        }
+
+        .simulador {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .simulador-tela {
+            background: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            padding: 15px;
+            border-radius: 10px;
+            min-height: 280px;
+            max-height: 280px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            margin-bottom: 12px;
+        }
+
+        .simulador-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .simulador-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .simulador-input button {
+            padding: 10px 20px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .simulador-input button:hover {
+            background: #7c3aed;
+        }
+
+        .simulador-input button.secondary {
+            background: #ef4444;
+        }
+
+        .simulador-input button.secondary:hover {
+            background: #dc2626;
+        }
+
+        .guia {
+            background: #fef9e6;
+            border-left: 5px solid #f59e0b;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 12px;
+        }
+
+        .guia h3 {
+            color: #f59e0b;
+            margin-bottom: 15px;
+        }
+
+        .guia ul, .guia ol {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+
+        .guia li {
+            margin: 8px 0;
+        }
+
+        .dica {
+            background: #dcfce7;
+            border-left: 4px solid #22c55e;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .dica-codigo {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            margin: 10px 0;
+        }
+
+        .exemplo-sintaxe {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            margin: 10px 0;
+            font-size: 0.85rem;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+        }
+
+        footer a {
+            color: #ffd700;
+            text-decoration: none;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #22c55e;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 0.65rem;
+            margin-bottom: 8px;
+        }
+
+        .tabela-dicas {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .tabela-dicas th, .tabela-dicas td {
+            border: 1px solid #cbd5e1;
+            padding: 8px 12px;
+            text-align: left;
+        }
+
+        .tabela-dicas th {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📦 Tema 05: Vetores em Portugol</h1>
+            <p>Aprenda a armazenar múltiplos valores em uma única estrutura de dados</p>
+        </div>
+
+        <!-- Guia Textual -->
+        <div class="guia">
+            <h3>📖 O que são Vetores?</h3>
+            <p>Imagine que você precisa armazenar as notas de 10 alunos. Criar 10 variáveis diferentes seria muito trabalhoso! Os <strong>vetores</strong> resolvem esse problema permitindo armazenar vários valores do mesmo tipo em uma única estrutura.</p>
+            
+            <div class="exemplo-sintaxe">
+                <strong>📌 Representação visual de um vetor:</strong><br>
+                Vetor Nomes:<br>
+                [ Maria ] [ João ] [ Rosa ] [ Paula ] [ Fábio ]<br>
+                &nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4
+            </div>
+
+            <h3>🔧 Declaração de Vetores</h3>
+            <div class="exemplo-sintaxe">
+                <strong>Sintaxe:</strong> tipo nome[tamanho]<br><br>
+                <strong>Exemplos:</strong><br>
+                inteiro numeros[5]<br>
+                real notas[10]<br>
+                cadeia nomes[50]<br>
+                logico aprovados[30]
+            </div>
+
+            <h3>📝 Inicialização e Acesso</h3>
+            <div class="exemplo-sintaxe">
+                <strong>Inicializando com valores:</strong><br>
+                inteiro vetor[5] = {10, 20, 30, 40, 50}<br>
+                cadeia alunos[3] = {"Ana", "Bruno", "Carla"}<br><br>
+                <strong>Acessando elementos (índice começa em 0):</strong><br>
+                escreva(vetor[0])   // mostra 10<br>
+                vetor[2] = 100      // altera a posição 2 para 100
+            </div>
+
+            <h3>🔄 Vetores com Laços de Repetição</h3>
+            <div class="exemplo-sintaxe">
+                <strong>Lendo valores para o vetor:</strong><br>
+                para (inteiro i = 0; i < 5; i++) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;escreva("Digite o valor ", i + 1, ": ")<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;leia(vetor[i])<br>
+                }<br><br>
+                <strong>Exibindo os valores:</strong><br>
+                para (inteiro i = 0; i < 5; i++) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;escreva("Posição ", i, ": ", vetor[i], "\n")<br>
+                }
+            </div>
+
+            <div class="dica">
+                <strong>💡 Dica Importante:</strong><br>
+                • O primeiro índice do vetor é sempre <strong>0</strong> (zero)<br>
+                • O último índice é <strong>tamanho - 1</strong><br>
+                • Valores padrão: inteiro/real = 0, caracter/cadeia = "", logico = falso<br>
+                • Use laços "para" para percorrer vetores de forma eficiente
+            </div>
+        </div>
+
+        <!-- Exemplos Interativos -->
+        <div class="grid">
+            <!-- Exemplo 1: Declaração e Acesso -->
+            <div class="card">
+                <div class="card-header">
+                    📌 Exemplo 1: Declaração e Acesso
+                    <button onclick="copiarCodigo('codigo1')">📋 Copiar</button>
+                </div>
+                <div class="card-content">
+                    <div class="badge">✅ Declarando e acessando posições</div>
+                    <div id="codigo1" class="code-block">
+                        <button class="copy-btn" onclick="copiarTexto(this)">Copiar</button>
+                        <pre>programa
+{
+    funcao inicio()
+    {
+        inteiro numeros[5] = {15, 22, 8, 10, 11}
+        cadeia nomes[3] = {"Ana", "Bruno", "Carla"}
+        
+        escreva("Primeiro número: ", numeros[0], "\n")
+        escreva("Segundo número: ", numeros[1], "\n")
+        escreva("Último número: ", numeros[4], "\n")
+        
+        escreva("\nPrimeiro nome: ", nomes[0], "\n")
+        escreva("Segundo nome: ", nomes[1], "\n")
+        escreva("Terceiro nome: ", nomes[2], "\n")
+        
+        numeros[2] = 100
+        nomes[1] = "Beatriz"
+        
+        escreva("\n--- APÓS ALTERAÇÃO ---\n")
+        escreva("Posição 2 agora é: ", numeros[2], "\n")
+        escreva("Posição 1 agora é: ", nomes[1], "\n")
+    }
+}</pre>
+                    </div>
+
+                    <div class="simulador">
+                        <div class="simulador-tela" id="telaEx1">
+📌 EXEMPLO 1: Declaração e Acesso
+
+Primeiro número: 15
+Segundo número: 22
+Último número: 11
+
+Primeiro nome: Ana
+Segundo nome: Bruno
+Terceiro nome: Carla
+
+--- APÓS ALTERAÇÃO ---
+Posição 2 agora é: 100
+Posição 1 agora é: Beatriz
+                        </div>
+                        <div class="simulador-input">
+                            <input type="text" id="inputEx1" placeholder="Pressione ENTER para executar..." autocomplete="off">
+                            <button onclick="executarEx1()">▶ EXECUTAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exemplo 2: Vetor com Laço -->
+            <div class="card">
+                <div class="card-header">
+                    🔄 Exemplo 2: Vetor com Laço PARA
+                    <button onclick="copiarCodigo('codigo2')">📋 Copiar</button>
+                </div>
+                <div class="card-content">
+                    <div class="badge">✅ Lendo e exibindo com laço</div>
+                    <div id="codigo2" class="code-block">
+                        <button class="copy-btn" onclick="copiarTexto(this)">Copiar</button>
+                        <pre>programa
+{
+    funcao inicio()
+    {
+        inteiro numeros[5]
+        cadeia pausa
+        
+        para (inteiro i = 0; i < 5; i++) {
+            escreva("Digite o número para posição ", i, ": ")
+            leia(numeros[i])
+        }
+        
+        escreva("\n--- VALORES DIGITADOS ---\n")
+        para (inteiro i = 0; i < 5; i++) {
+            escreva("Posição ", i, ": ", numeros[i], "\n")
+        }
+        
+        escreva("\nPressione ENTER para continuar...")
+        leia(pausa)
+    }
+}</pre>
+                    </div>
+
+                    <div class="simulador">
+                        <div class="simulador-tela" id="telaEx2">
+🔄 EXEMPLO 2: Vetor com Laço PARA
+
+--- VALORES DIGITADOS ---
+Posição 0: 0
+Posição 1: 0
+Posição 2: 0
+Posição 3: 0
+Posição 4: 0
+
+Pressione ENTER para continuar...
+                        </div>
+                        <div class="simulador-input">
+                            <input type="text" id="inputEx2" placeholder="Digite um número (0-100)..." autocomplete="off">
+                            <button onclick="executarEx2()">▶ ENTER</button>
+                            <button onclick="reiniciarEx2()" class="secondary">🔄 REINICIAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid">
+            <!-- Exemplo 3: Média de Notas -->
+            <div class="card">
+                <div class="card-header">
+                    📊 Exemplo 3: Média de Notas dos Alunos
+                    <button onclick="copiarCodigo('codigo3')">📋 Copiar</button>
+                </div>
+                <div class="card-content">
+                    <div class="badge">✅ Vetores para nomes e notas</div>
+                    <div id="codigo3" class="code-block">
+                        <button class="copy-btn" onclick="copiarTexto(this)">Copiar</button>
+                        <pre>programa
+{
+    funcao inicio()
+    {
+        cadeia nomes[5]
+        real av1[5]
+        real av2[5]
+        real media[5]
+        cadeia pausa
+        
+        para (inteiro i = 0; i < 5; i++) {
+            escreva("\n--- ALUNO ", i + 1, " ---\n")
+            escreva("Nome: ")
+            leia(nomes[i])
+            escreva("Nota AV1: ")
+            leia(av1[i])
+            escreva("Nota AV2: ")
+            leia(av2[i])
+            media[i] = (av1[i] + av2[i]) / 2
+        }
+        
+        escreva("\n\n=== MÉDIA DOS ALUNOS ===\n")
+        para (inteiro i = 0; i < 5; i++) {
+            escreva("Nome: ", nomes[i], 
+                    " Nota AV1: ", av1[i],
+                    " Nota AV2: ", av2[i],
+                    " Média: ", media[i], "\n")
+        }
+        
+        escreva("\nPressione ENTER para continuar...")
+        leia(pausa)
+    }
+}</pre>
+                    </div>
+
+                    <div class="simulador">
+                        <div class="simulador-tela" id="telaEx3">
+📊 EXEMPLO 3: Média de Notas dos Alunos
+
+=== MÉDIA DOS ALUNOS ===
+Nome: Ana Nota AV1: 7 Nota AV2: 8 Média: 7.5
+Nome: Bruno Nota AV1: 6 Nota AV2: 7 Média: 6.5
+Nome: Carla Nota AV1: 9 Nota AV2: 10 Média: 9.5
+Nome: Daniel Nota AV1: 5 Nota AV2: 6 Média: 5.5
+Nome: Elisa Nota AV1: 8 Nota AV2: 7 Média: 7.5
+
+Pressione ENTER para continuar...
+                        </div>
+                        <div class="simulador-input">
+                            <input type="text" id="inputEx3" placeholder="Escolha um aluno (1-5) para ver os dados..." autocomplete="off">
+                            <button onclick="executarEx3()">▶ CONSULTAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exemplo 4: Números Pares -->
+            <div class="card">
+                <div class="card-header">
+                    🔢 Exemplo 4: Filtrar Números Pares
+                    <button onclick="copiarCodigo('codigo4')">📋 Copiar</button>
+                </div>
+                <div class="card-content">
+                    <div class="badge">✅ Processamento com vetores</div>
+                    <div id="codigo4" class="code-block">
+                        <button class="copy-btn" onclick="copiarTexto(this)">Copiar</button>
+                        <pre>programa
+{
+    funcao inicio()
+    {
+        inteiro numeros[10]
+        inteiro pares[10]
+        inteiro qtdPares = 0
+        cadeia pausa
+        
+        para (inteiro i = 0; i < 10; i++) {
+            escreva("Digite o ", i + 1, "º número: ")
+            leia(numeros[i])
+            
+            se (numeros[i] % 2 == 0) {
+                pares[qtdPares] = numeros[i]
+                qtdPares = qtdPares + 1
+            }
+        }
+        
+        escreva("\n=== NÚMEROS PARES ===\n")
+        se (qtdPares == 0) {
+            escreva("Nenhum número par foi digitado.\n")
+        }
+        senao {
+            para (inteiro i = 0; i < qtdPares; i++) {
+                escreva(pares[i], " ")
+            }
+            escreva("\n")
+        }
+        
+        escreva("\nTotal de números pares: ", qtdPares, "\n")
+        escreva("\nPressione ENTER para continuar...")
+        leia(pausa)
+    }
+}</pre>
+                    </div>
+
+                    <div class="simulador">
+                        <div class="simulador-tela" id="telaEx4">
+🔢 EXEMPLO 4: Filtrar Números Pares
+
+=== NÚMEROS PARES ===
+2 4 6 8 10 12 
+
+Total de números pares: 6
+
+Pressione ENTER para continuar...
+                        </div>
+                        <div class="simulador-input">
+                            <input type="text" id="inputEx4" placeholder="Digite um número (1-100)..." autocomplete="off">
+                            <button onclick="executarEx4()">▶ ADICIONAR</button>
+                            <button onclick="reiniciarEx4()" class="secondary">🔄 REINICIAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exercícios Propostos com Dicas Corrigidas -->
+        <div class="guia">
+            <h3>🏆 Exercícios Propostos</h3>
+            
+            <table class="tabela-dicas">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Exercício</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1</strong></td>
+                        <td><strong>Vetor de 5 números</strong></td>
+                        <td>Desenvolva um programa que armazene 5 números inteiros digitados pelo usuário e depois os exiba em tela.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2</strong></td>
+                        <td><strong>Números Aleatórios</strong></td>
+                        <td>Crie um programa que gere 5 números aleatórios (0 a 100) e os armazene em um vetor, depois exiba todos.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3</strong></td>
+                        <td><strong>Média dos Alunos</strong></td>
+                        <td>Faça um programa que leia nomes, notas AV1 e AV2 de 5 alunos, calcule a média e exiba os resultados.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4</strong></td>
+                        <td><strong>Números Pares</strong></td>
+                        <td>Leia 10 números inteiros e exiba apenas os números pares armazenados no vetor.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>5</strong></td>
+                        <td><strong>Maior e Menor</strong></td>
+                        <td>Crie um programa que leia 8 números e exiba o maior e o menor valor encontrado.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>💡 Dicas para os exercícios</h3>
+            
+            <h4>📌 Dicas Gerais</h4>
+            <ul>
+                <li><strong>Percorrer vetores:</strong> use <code>para (inteiro i = 0; i < tamanho; i++)</code></li>
+                <li><strong>Índices:</strong> o primeiro índice do vetor é sempre <strong>0</strong>, o último é <strong>tamanho - 1</strong></li>
+                <li><strong>Pausa:</strong> use <code>cadeia pausa</code> e <code>leia(pausa)</code> para aguardar o ENTER</li>
+            </ul>
+
+            <h4>🔢 Exercício 1 - Vetor de 5 números</h4>
+            <ul>
+                <li>Declare o vetor: <code>inteiro numeros[5]</code></li>
+                <li>Use um laço <code>para</code> para ler cada posição</li>
+                <li>Use outro laço <code>para</code> para exibir os valores</li>
+            </ul>
+            <div class="dica-codigo">
+                <strong>Estrutura básica:</strong><br>
+                para (inteiro i = 0; i < 5; i++) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;escreva("Digite o ", i + 1, "º número: ")<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;leia(numeros[i])<br>
+                }
+            </div>
+
+            <h4>🎲 Exercício 2 - Números Aleatórios</h4>
+            <ul>
+                <li><strong>Importante:</strong> inclua a biblioteca Util no início do programa</li>
+            </ul>
+            <div class="dica-codigo">
+                programa<br>
+                {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;inclua biblioteca Util<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;funcao inicio()<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// seu código aqui<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                }
+            </div>
+            <ul>
+                <li>Gere números aleatórios com: <code>Util.sorteia(0, 100)</code></li>
+                <li>A função <code>sorteia(min, max)</code> retorna um número inteiro entre min e max (inclusive)</li>
+            </ul>
+            <div class="dica-codigo">
+                <strong>Exemplo:</strong><br>
+                numeros[i] = Util.sorteia(0, 100)
+            </div>
+
+            <h4>📊 Exercício 3 - Média dos Alunos</h4>
+            <ul>
+                <li>Crie 4 vetores: <code>cadeia nomes[5]</code>, <code>real av1[5]</code>, <code>real av2[5]</code>, <code>real media[5]</code></li>
+                <li>Calcule a média: <code>media[i] = (av1[i] + av2[i]) / 2</code></li>
+                <li>Exiba os resultados formatados</li>
+            </ul>
+
+            <h4>🔢 Exercício 4 - Números Pares</h4>
+            <ul>
+                <li>Verifique se um número é par: <code>numeros[i] % 2 == 0</code></li>
+                <li>Use um contador para controlar a posição no vetor de pares</li>
+                <li>Exiba apenas os números que atendem à condição</li>
+            </ul>
+
+            <h4>📈 Exercício 5 - Maior e Menor</h4>
+            <ul>
+                <li>Inicialize <code>maior</code> e <code>menor</code> com o primeiro elemento: <code>maior = numeros[0]</code></li>
+                <li>Percorra o vetor a partir do índice 1</li>
+                <li>Compare cada elemento e atualize <code>maior</code> e <code>menor</code> quando necessário</li>
+            </ul>
+
+            <h3>📋 Estrutura Básica para os Exercícios</h3>
+            <div class="dica-codigo">
+                programa<br>
+                {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;funcao inicio()<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Declaração das variáveis e vetores<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cadeia pausa<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Entrada de dados<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;para (inteiro i = 0; i < tamanho; i++) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;escreva("Digite o valor: ")<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;leia(vetor[i])<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Processamento (quando necessário)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Saída de dados<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;escreva("\n=== RESULTADO ===\n")<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;para (inteiro i = 0; i < tamanho; i++) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;escreva(vetor[i], " ")<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;escreva("\n")<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Pausa<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;escreva("\nPressione ENTER para finalizar...")<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;leia(pausa)<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                }
+            </div>
+
+            <h3>📚 Referência Rápida</h3>
+            <table class="tabela-dicas">
+                <thead>
+                    <tr>
+                        <th>Conceito</th>
+                        <th>Sintaxe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Declarar vetor</td><td><code>tipo nome[tamanho]</code></td></tr>
+                    <tr><td>Inicializar vetor</td><td><code>inteiro numeros[5] = {1, 2, 3, 4, 5}</code></td></tr>
+                    <tr><td>Acessar posição</td><td><code>vetor[0] = 10</code></td></tr>
+                    <tr><td>Laço para percorrer</td><td><code>para (inteiro i = 0; i < 5; i++)</code></td></tr>
+                    <tr><td>Número aleatório</td><td><code>Util.sorteia(0, 100)</code> (com biblioteca Util)</td></tr>
+                    <tr><td>Verificar par</td><td><code>numero % 2 == 0</code></td></tr>
+                    <tr><td>Incluir biblioteca</td><td><code>inclua biblioteca Util</code> (dentro do programa)</td></tr>
+                </tbody>
+            </table>
+
+            <div class="dica">
+                <strong>⚠️ Atenção!</strong><br>
+                • O índice do vetor começa em <strong>0</strong>, não em 1<br>
+                • A função correta para números aleatórios é <strong><code>Util.sorteia(min, max)</code></strong> (não <code>aleatorio</code>)<br>
+                • Sempre inclua <code>inclua biblioteca Util</code> <strong>dentro</strong> do programa para usar <code>sorteia()</code><br>
+                • Use <code>%</code> (operador módulo) para verificar se um número é par ou ímpar
+            </div>
+        </div>
+
+        <footer>
+            <p>📌 Tema 05 - Vetores em Portugol</p>
+            <p>Teste os códigos no <a href="https://portugol.dev/" target="_blank">Portugol Web Studio</a> | Copie e cole para praticar!</p>
+        </footer>
+    </div>
+
+    <script>
+        function copiarTexto(botao) {
+            const pre = botao.parentElement.querySelector('pre');
+            navigator.clipboard.writeText(pre.innerText);
+            const original = botao.innerText;
+            botao.innerText = '✅ Copiado!';
+            setTimeout(() => botao.innerText = original, 2000);
+        }
+
+        function copiarCodigo(id) {
+            const pre = document.getElementById(id).querySelector('pre');
+            navigator.clipboard.writeText(pre.innerText);
+            alert('✅ Código copiado!');
+        }
+
+        // Exemplo 1
+        function executarEx1() {
+            let input = document.getElementById('inputEx1').value;
+            if (input === "") {
+                alert("Este é um exemplo demonstrativo. Observe o código ao lado!");
+            }
+            document.getElementById('inputEx1').value = '';
+        }
+
+        // Exemplo 2 - Vetor com laço
+        let numerosEx2 = [0, 0, 0, 0, 0];
+        let posEx2 = 0;
+
+        function executarEx2() {
+            let input = document.getElementById('inputEx2').value;
+            let valor = parseInt(input);
+            
+            if (isNaN(valor) || valor < 0 || valor > 100) {
+                alert("Digite um número válido entre 0 e 100!");
+                document.getElementById('inputEx2').value = '';
+                return;
+            }
+            
+            numerosEx2[posEx2] = valor;
+            posEx2++;
+            
+            if (posEx2 < 5) {
+                document.getElementById('telaEx2').innerHTML = 
+`🔄 EXEMPLO 2: Vetor com Laço PARA
+
+Digite o número para posição ${posEx2}: ${valor}
+
+--- VALORES DIGITADOS ---
+Posição 0: ${numerosEx2[0]}
+Posição 1: ${numerosEx2[1]}
+Posição 2: ${numerosEx2[2]}
+Posição 3: ${numerosEx2[3]}
+Posição 4: ${numerosEx2[4]}
+
+Aguardando mais ${5 - posEx2} valor(es)...`;
+            } else {
+                document.getElementById('telaEx2').innerHTML = 
+`🔄 EXEMPLO 2: Vetor com Laço PARA
+
+--- VALORES DIGITADOS ---
+Posição 0: ${numerosEx2[0]}
+Posição 1: ${numerosEx2[1]}
+Posição 2: ${numerosEx2[2]}
+Posição 3: ${numerosEx2[3]}
+Posição 4: ${numerosEx2[4]}
+
+Pressione ENTER para continuar...`;
+                posEx2 = 0;
+                numerosEx2 = [0, 0, 0, 0, 0];
+            }
+            
+            document.getElementById('inputEx2').value = '';
+        }
+
+        function reiniciarEx2() {
+            numerosEx2 = [0, 0, 0, 0, 0];
+            posEx2 = 0;
+            document.getElementById('telaEx2').innerHTML = 
+`🔄 EXEMPLO 2: Vetor com Laço PARA
+
+--- VALORES DIGITADOS ---
+Posição 0: 0
+Posição 1: 0
+Posição 2: 0
+Posição 3: 0
+Posição 4: 0
+
+Pressione ENTER para continuar...`;
+            document.getElementById('inputEx2').value = '';
+        }
+
+        // Exemplo 3 - Média de Alunos
+        const alunos = [
+            {nome: "Ana", av1: 7, av2: 8, media: 7.5},
+            {nome: "Bruno", av1: 6, av2: 7, media: 6.5},
+            {nome: "Carla", av1: 9, av2: 10, media: 9.5},
+            {nome: "Daniel", av1: 5, av2: 6, media: 5.5},
+            {nome: "Elisa", av1: 8, av2: 7, media: 7.5}
+        ];
+
+        function executarEx3() {
+            let input = document.getElementById('inputEx3').value;
+            let opcao = parseInt(input);
+            
+            if (isNaN(opcao) || opcao < 1 || opcao > 5) {
+                alert("Digite um número de 1 a 5 para consultar um aluno!");
+                document.getElementById('inputEx3').value = '';
+                return;
+            }
+            
+            let aluno = alunos[opcao - 1];
+            document.getElementById('telaEx3').innerHTML = 
+`📊 EXEMPLO 3: Média de Notas dos Alunos
+
+--- ALUNO ${opcao} ---
+Nome: ${aluno.nome}
+Nota AV1: ${aluno.av1}
+Nota AV2: ${aluno.av2}
+Média: ${aluno.media}
+
+=== MÉDIA DOS ALUNOS ===
+Nome: Ana Nota AV1: 7 Nota AV2: 8 Média: 7.5
+Nome: Bruno Nota AV1: 6 Nota AV2: 7 Média: 6.5
+Nome: Carla Nota AV1: 9 Nota AV2: 10 Média: 9.5
+Nome: Daniel Nota AV1: 5 Nota AV2: 6 Média: 5.5
+Nome: Elisa Nota AV1: 8 Nota AV2: 7 Média: 7.5
+
+Pressione ENTER para continuar...`;
+            
+            document.getElementById('inputEx3').value = '';
+        }
+
+        // Exemplo 4 - Números Pares
+        let numerosEx4 = [];
+        let paresEx4 = [];
+
+        function executarEx4() {
+            let input = document.getElementById('inputEx4').value;
+            let valor = parseInt(input);
+            
+            if (isNaN(valor) || valor < 1 || valor > 100) {
+                alert("Digite um número válido entre 1 e 100!");
+                document.getElementById('inputEx4').value = '';
+                return;
+            }
+            
+            numerosEx4.push(valor);
+            if (valor % 2 === 0) {
+                paresEx4.push(valor);
+            }
+            
+            if (numerosEx4.length < 10) {
+                document.getElementById('telaEx4').innerHTML = 
+`🔢 EXEMPLO 4: Filtrar Números Pares
+
+Números digitados: ${numerosEx4.length}/10
+Números pares encontrados: ${paresEx4.join(', ') || 'nenhum'}
+
+Digite o ${numerosEx4.length + 1}º número...`;
+            } else {
+                let paresStr = paresEx4.length > 0 ? paresEx4.join(' ') : 'Nenhum número par foi digitado.';
+                document.getElementById('telaEx4').innerHTML = 
+`🔢 EXEMPLO 4: Filtrar Números Pares
+
+=== NÚMEROS PARES ===
+${paresStr}
+
+Total de números pares: ${paresEx4.length}
+
+Pressione ENTER para continuar...`;
+            }
+            
+            document.getElementById('inputEx4').value = '';
+        }
+
+        function reiniciarEx4() {
+            numerosEx4 = [];
+            paresEx4 = [];
+            document.getElementById('telaEx4').innerHTML = 
+`🔢 EXEMPLO 4: Filtrar Números Pares
+
+=== NÚMEROS PARES ===
+Aguardando números...
+
+Total de números pares: 0
+
+Digite um número (1-100) para adicionar...`;
+            document.getElementById('inputEx4').value = '';
+        }
+
+        // Enter key support
+        document.getElementById('inputEx1').addEventListener('keypress', e => e.key === 'Enter' && executarEx1());
+        document.getElementById('inputEx2').addEventListener('keypress', e => e.key === 'Enter' && executarEx2());
+        document.getElementById('inputEx3').addEventListener('keypress', e => e.key === 'Enter' && executarEx3());
+        document.getElementById('inputEx4').addEventListener('keypress', e => e.key === 'Enter' && executarEx4());
+    </script>
+</body>
+</html>
